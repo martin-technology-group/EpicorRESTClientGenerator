@@ -209,6 +209,8 @@ namespace EpicorSwaggerRESTGenerator.WPFGUI
             details.Project = proj;
             details.Namespace = NamespaceTextBox.Text;
             details.useBaseClass = (bool)UseBaseClassCheckBox.IsChecked;
+            details.Username = usernameTextBox.Text;
+            details.Password = passwordTextBox.Text;
 
             var test = await service.generateCode(services, details);
             if (test)
