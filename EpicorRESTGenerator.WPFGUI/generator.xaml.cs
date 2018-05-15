@@ -43,7 +43,7 @@ namespace EpicorSwaggerRESTGenerator.WPFGUI
                     MessageBox.Show("Username is required");
                     return;
                 }
-                if(string.IsNullOrEmpty(passwordTextBox.Text))
+                if(string.IsNullOrEmpty(passwordTextBox.Password))
                 {
                     MessageBox.Show("Password is required");
                     return;
@@ -137,7 +137,7 @@ namespace EpicorSwaggerRESTGenerator.WPFGUI
             if((bool)useCredentialsCheckBox.IsChecked)
             {
                 details.Username = usernameTextBox.Text;
-                details.Password = passwordTextBox.Text;
+                details.Password = passwordTextBox.Password;
             }
 
             services = service.getServices(textBox.Text, details);
@@ -154,7 +154,7 @@ namespace EpicorSwaggerRESTGenerator.WPFGUI
             if ((bool)useCredentialsCheckBox.IsChecked)
             {
                 details.Username = usernameTextBox.Text;
-                details.Password = passwordTextBox.Text;
+                details.Password = passwordTextBox.Password;
             }
             try
             {
@@ -210,7 +210,7 @@ namespace EpicorSwaggerRESTGenerator.WPFGUI
             details.Namespace = NamespaceTextBox.Text;
             details.useBaseClass = (bool)UseBaseClassCheckBox.IsChecked;
             details.Username = usernameTextBox.Text;
-            details.Password = passwordTextBox.Text;
+            details.Password = passwordTextBox.Password;
 
             var test = await service.generateCode(services, details);
             if (test)
@@ -230,17 +230,6 @@ namespace EpicorSwaggerRESTGenerator.WPFGUI
         private void ServiceListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             e.Handled = true;
-        }
-
-        private void useCredentialsCheckBox_Checked(object sender, RoutedEventArgs e)
-        {
-            usernameTextBox.IsEnabled = true;
-            passwordTextBox.IsEnabled = true;
-        }
-        private void useCredentialsCheckBox_UnChecked(object sender, RoutedEventArgs e)
-        {
-            usernameTextBox.IsEnabled = false;
-            passwordTextBox.IsEnabled = false;
         }
 
         private void button1_Click(object sender, RoutedEventArgs e)
@@ -274,6 +263,11 @@ namespace EpicorSwaggerRESTGenerator.WPFGUI
                 file.Close();
                 //File.WriteAllText(dialog.FileName, richTextBox.Document.);
             }
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            EpicorRESTGenerator.WPFGUI.Properties.Settings.Default.Save();
         }
     }
 }

@@ -8,22 +8,91 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace EpicorSwaggerRESTGenerator.WPFGUI.Properties
-{
-
-
+namespace EpicorRESTGenerator.WPFGUI.Properties {
+    
+    
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "11.0.0.0")]
-    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase
-    {
-
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.6.0.0")]
+    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
+        
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
-
-        public static Settings Default
-        {
-            get
-            {
+        
+        public static Settings Default {
+            get {
                 return defaultInstance;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://yourepicorwebsite.com/instancename")]
+        public string EpicorUrl {
+            get {
+                return ((string)(this["EpicorUrl"]));
+            }
+            set {
+                this["EpicorUrl"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Epicor.Models")]
+        public string Namespace {
+            get {
+                return ((string)(this["Namespace"]));
+            }
+            set {
+                this["Namespace"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("EpicorBase")]
+        public string BaseClass {
+            get {
+                return ((string)(this["BaseClass"]));
+            }
+            set {
+                this["BaseClass"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\yourusername\\Documents\\GitHub\\Epicor.Models\\Epicor.Models\\Epicor.Models\\" +
+            "Epicor.Models.csproj")]
+        public string ERPProject {
+            get {
+                return ((string)(this["ERPProject"]));
+            }
+            set {
+                this["ERPProject"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("yourusername")]
+        public string Username {
+            get {
+                return ((string)(this["Username"]));
+            }
+            set {
+                this["Username"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool UseCredentials {
+            get {
+                return ((bool)(this["UseCredentials"]));
+            }
+            set {
+                this["UseCredentials"] = value;
             }
         }
     }

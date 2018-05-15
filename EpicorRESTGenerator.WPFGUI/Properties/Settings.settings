@@ -1,7 +1,24 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="uri:settings" CurrentProfile="(Default)">
-  <Profiles>
-    <Profile Name="(Default)" />
-  </Profiles>
-  <Settings />
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="EpicorRESTGenerator.WPFGUI.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="EpicorUrl" Type="System.String" Scope="User">
+      <Value Profile="(Default)">https://yourepicorwebsite.com/instancename</Value>
+    </Setting>
+    <Setting Name="Namespace" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Epicor.Models</Value>
+    </Setting>
+    <Setting Name="BaseClass" Type="System.String" Scope="User">
+      <Value Profile="(Default)">EpicorBase</Value>
+    </Setting>
+    <Setting Name="ERPProject" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\Users\yourusername\Documents\GitHub\Epicor.Models\Epicor.Models\Epicor.Models\Epicor.Models.csproj</Value>
+    </Setting>
+    <Setting Name="Username" Type="System.String" Scope="User">
+      <Value Profile="(Default)">yourusername</Value>
+    </Setting>
+    <Setting Name="UseCredentials" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+  </Settings>
 </SettingsFile>

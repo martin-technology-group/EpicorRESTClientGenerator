@@ -5,18 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EpicorSwaggerRESTGenerator.WPFGUI"
         mc:Ignorable="d"
-        Title="Epicor Client Generator" Height="547.724" Width="584.444">
+        Title="Epicor Client Generator" Height="547.724" Width="584.444"
+        Closing="Window_Closing">
     <Grid Margin="0,0,2,0">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition Width="0*"/>
         </Grid.ColumnDefinitions>
         <Label x:Name="serviceURLLabel" Content="Epicor URL:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.542,2.237" Height="26" Width="74"/>
-        <TextBox x:Name="serviceURLTextBox" HorizontalAlignment="Left" Height="23" Margin="89,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="475" Text="https://tmieapp10.tm.int/Development"/>
+        <TextBox x:Name="serviceURLTextBox" HorizontalAlignment="Left" Height="23" Margin="89,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="475" Text="{Binding Source={StaticResource Settings}, Path=Default.EpicorUrl}"/>
         <Label x:Name="ERPProjectDirLabel_Copy2" Content="Namespace:" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.542,2.237" Height="26" Width="74"/>
-        <TextBox x:Name="NamespaceTextBox" HorizontalAlignment="Left" Height="23" Margin="89,36,0,0" TextWrapping="Wrap" Text="E10RestClient" VerticalAlignment="Top" Width="475"/>
+        <TextBox x:Name="NamespaceTextBox" HorizontalAlignment="Left" Height="23" Margin="89,36,0,0" TextWrapping="Wrap" Text="{Binding Source={StaticResource Settings}, Path=Default.Namespace}" VerticalAlignment="Top" Width="475"/>
         <Label x:Name="ERPProjectDirLabel_Copy3" Content="Base Class:" HorizontalAlignment="Left" Margin="17,64,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.542,2.237" Height="26" Width="67"/>
-        <TextBox x:Name="BaseClassTextBox" HorizontalAlignment="Left" Height="23" Margin="89,64,0,0" TextWrapping="Wrap" Text="TMIBaseClass" VerticalAlignment="Top" Width="355"/>
+        <TextBox x:Name="BaseClassTextBox" HorizontalAlignment="Left" Height="23" Margin="89,64,0,0" TextWrapping="Wrap" Text="{Binding Source={StaticResource Settings}, Path=Default.BaseClass}" VerticalAlignment="Top" Width="355"/>
         <CheckBox x:Name="UseBaseClassCheckBox" Content="Use Base Class" HorizontalAlignment="Right" Margin="0,64,10,0" VerticalAlignment="Top" IsChecked="True" Height="15" Width="97"/>
         <TabControl x:Name="tabControl" Margin="10,147,10,10" IsEnabled="False" SelectionChanged="OnTabItemChanged">
             <TabItem Header="ERP">
@@ -32,7 +33,7 @@
                     <Button x:Name="GetERPServicesButton" Content="Get ERP Services" HorizontalAlignment="Left" Margin="347,9,0,0" VerticalAlignment="Top" Width="97" Height="23" Grid.Column="3" Click="GetERPServicesButton_Click" />
                     <ListBox x:Name="ERPServiceListBox" HorizontalAlignment="Left" Height="205" Margin="8,40,0,0" VerticalAlignment="Top" Width="529" SelectionMode="Extended" Grid.ColumnSpan="4" SelectionChanged="ServiceListBox_SelectionChanged"/>
                     <Label x:Name="ERPProjectDirLabel" Content="ERP Project:" HorizontalAlignment="Left" Margin="8,278,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.542,2.237" Grid.ColumnSpan="3"/>
-                    <TextBox x:Name="ERPProjectTextBox" HorizontalAlignment="Left" Height="23" Margin="10,278,0,0" TextWrapping="Wrap" Text="F:\TMI.E10RestClient\E10RestClient\E10RestClient.csproj" VerticalAlignment="Top" Width="448" Grid.Column="2" Grid.ColumnSpan="2"/>
+                    <TextBox x:Name="ERPProjectTextBox" HorizontalAlignment="Left" Height="23" Margin="10,278,0,0" TextWrapping="Wrap" Text="{Binding Source={StaticResource Settings}, Path=Default.ERPProject}" VerticalAlignment="Top" Width="448" Grid.Column="2" Grid.ColumnSpan="2"/>
                     <Label x:Name="ERPAPIURLLabel" Content="API's URL:" HorizontalAlignment="Left" Margin="8,250,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.542,2.237"/>
                     <TextBox x:Name="ERPAPIURLTextBox" HorizontalAlignment="Left" Height="23" Margin="10,250,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="448" Grid.Column="2" Grid.ColumnSpan="2"/>
                     <Button x:Name="GeneratERPButton" Content="Generate ERP" HorizontalAlignment="Left" Margin="343,306,0,6" Width="101" RenderTransformOrigin="1.144,0.117" Grid.Column="3" Click="GeneratERPButton_Click"/>
@@ -98,8 +99,8 @@
         <Button x:Name="CheckService" Content="Check" HorizontalAlignment="Left" Margin="489,122,0,0" VerticalAlignment="Top" Width="75" Click="CheckService_Click"/>
         <Label x:Name="usernameLabel" Content="Username:" HorizontalAlignment="Left" Margin="18,90,0,0" VerticalAlignment="Top"/>
         <Label x:Name="passwordlabel" Content="Password:" HorizontalAlignment="Left" Margin="22,116,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="usernameTextBox" HorizontalAlignment="Left" Height="23" Margin="89,92,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="355" IsEnabled="False"/>
-        <TextBox x:Name="passwordTextBox" HorizontalAlignment="Left" Height="23" Margin="89,119,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="355" IsEnabled="False"/>
-        <CheckBox x:Name="useCredentialsCheckBox" Content="Use Credentials" HorizontalAlignment="Left" Margin="467,90,0,0" VerticalAlignment="Top" Checked="useCredentialsCheckBox_Checked" Unchecked="useCredentialsCheckBox_UnChecked"/>
+        <TextBox x:Name="usernameTextBox" HorizontalAlignment="Left" Height="23" Margin="89,92,0,0" TextWrapping="Wrap" Text="{Binding Source={StaticResource Settings}, Path=Default.Username}" VerticalAlignment="Top" Width="355" IsEnabled="{Binding Source={StaticResource Settings}, Path=Default.UseCredentials}"/>
+        <PasswordBox x:Name="passwordTextBox" HorizontalAlignment="Left" Height="23" Margin="89,119,0,0" VerticalAlignment="Top" Width="355" IsEnabled="{Binding Source={StaticResource Settings}, Path=Default.UseCredentials}"/>
+        <CheckBox x:Name="useCredentialsCheckBox" Content="Use Credentials" HorizontalAlignment="Left" Margin="467,90,0,0" VerticalAlignment="Top" IsChecked="{Binding Source={StaticResource Settings}, Path=Default.UseCredentials}" />
     </Grid>
 </Window>
