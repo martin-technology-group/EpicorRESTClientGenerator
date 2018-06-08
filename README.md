@@ -1,14 +1,19 @@
 # EpicorRESTClientGenerator
-This genertor was created to maintain Business Objects in third party and custom integration software applications
+Interacting with the Epicor REST API using C# requires strongly-typed classes that match the Epicor Business Objects schema. Use this utility to generate these classes from Epicor Business Objects using `NSwag.CodeGeneration.CSharp` and the Epicor REST API.
 
-This generator uses NSwag.CodeGeneration.CSharp 
+![image](https://user-images.githubusercontent.com/1199572/41174132-3761e1d6-6b27-11e8-97be-df85b18d1423.png)
 
-I have included a WPF client for working with the class library
+## Getting Started
+1. Clone this repository and build the solution, then run the `EpicorRESTGenerator.WPFGUI` project. On first run you will need to populate the settings below. The settings (except the password) are persisted to the filesystem and should load during subsequent runs.
 
-You may need to make a few modifications to the source code for your implementation 
+    - Epicor URL (Full URL to the Epicor instance)
+    - Namespace (Generated class namespace)
+    - Base Class (Generated base class)
+    - Username
+    - Password
+    - ERP Project (Target directory path for the generated classes)
 
-I have included a ClientBase class that creates the HttpClient used to make all the rest calls, it also sets up the authentication
-
-You may have to edit this class depending on your security needs
-
-I use this when adding a new BAQ or when Epicor updates the services
+2. After populating the required settings, click "Login" to authenticate with API.
+3. After logging in, click "Get Service List" to get the list of available services from the API.
+4. Select one (or multiple) services, then click "Generate Models".
+5. Browse to the "ERP Project" target directory path to confirm that the classes generated correctly.
