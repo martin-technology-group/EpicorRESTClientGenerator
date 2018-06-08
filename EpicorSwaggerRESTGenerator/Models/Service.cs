@@ -88,12 +88,15 @@ namespace EpicorSwaggerRESTGenerator.Models
                         string output = JsonConvert.SerializeObject(jsonObj, Newtonsoft.Json.Formatting.Indented);
 
                         var document = await SwaggerDocument.FromJsonAsync(output);
-                        var settings = new SwaggerToCSharpClientGeneratorSettings() { ClassName = name, OperationNameGenerator = new SingleClientFromOperationIdOperationNameGenerator() };
+                        var settings = new SwaggerToCSharpClientGeneratorSettings() {
+                            ClassName = name,
+                            OperationNameGenerator = new SingleClientFromOperationIdOperationNameGenerator()
+                        };
                         var generator = new SwaggerToCSharpClientGenerator(document, settings);
                         if (details.useBaseClass) generator.Settings.ClientBaseClass = details.BaseClass;
                         generator.Settings.UseHttpClientCreationMethod = true;
                         generator.Settings.AdditionalNamespaceUsages = new[] { "Newtonsoft.Json", "Newtonsoft.Json.Linq" };
-                        generator.Settings.GenerateSyncMethods = true;
+                        generator.Settings.DisposeHttpClient = false;
 
                         var code = generator.GenerateFile();
                         code = code
