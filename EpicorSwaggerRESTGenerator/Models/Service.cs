@@ -123,10 +123,12 @@ namespace EpicorSwaggerRESTGenerator.Models
                             .Replace(", Required = Newtonsoft.Json.Required.Always)]", ", Required = Newtonsoft.Json.Required.AllowNull)]")
                             .Replace("[System.ComponentModel.DataAnnotations.Required]", "")
                             .Replace(@"public string BaseUrl", "public new string BaseUrl")
-                        //.Replace("get { return _baseUrl; }", "get;")
-                        //.Replace("set { _baseUrl = value; }", "set;");
+                            // Convert doubles and longs to strings (IEEE754Compatible)
+                            .Replace("private double?", "private string")
+                            .Replace("public double?", "public string")
+                            .Replace("private long?", "private string")
+                            .Replace("public long?", "public string")
                         ;
-                        //addReference(details.Project, service.href + ".cs");
                         File.WriteAllText(Path.GetDirectoryName(details.Project) + "\\" + service.href + ".cs", code);
                     }
                     catch (Exception ex)
