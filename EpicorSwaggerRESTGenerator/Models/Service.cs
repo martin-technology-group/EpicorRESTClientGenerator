@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace EpicorSwaggerRESTGenerator.Models
@@ -129,6 +130,14 @@ namespace EpicorSwaggerRESTGenerator.Models
                             .Replace("private long?", "private string")
                             .Replace("public long?", "public string")
                         ;
+
+                        code = Regex.Replace(code,
+                            "(urlBuilder_\\.Replace\\(\"{(?:.*?)}\", System\\.Uri\\.EscapeDataString\\(System.Convert.ToString\\()((?:.*?))(, System\\.Globalization\\.CultureInfo\\.InvariantCulture\\)\\)\\);)", 
+                            delegate (Match match)
+                        {
+                            return match.Groups[1].Value + "\"'\" + " + match.Groups[2].Value + " + \"'\"" + match.Groups[3].Value;
+                        });
+
                         File.WriteAllText(Path.GetDirectoryName(details.Project) + "\\" + service.href + ".cs", code);
                     }
                     catch (Exception ex)
