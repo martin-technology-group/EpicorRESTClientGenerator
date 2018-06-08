@@ -1,7 +1,7 @@
 # EpicorRESTClientGenerator
 Interacting with the Epicor REST API using C# requires strongly-typed classes that match the Epicor Business Objects schema. Use this utility to generate these classes from Epicor Business Objects using `NSwag.CodeGeneration.CSharp` and the Epicor REST API.
 
-![image](https://user-images.githubusercontent.com/1199572/41174132-3761e1d6-6b27-11e8-97be-df85b18d1423.png)
+![image](https://user-images.githubusercontent.com/1199572/41175887-952f1720-6b2c-11e8-9dfd-c211f3267356.png)
 
 ## Getting Started
 1. Clone this repository and build the solution, then run the `EpicorRESTGenerator.WPFGUI` project. On first run you will need to populate the settings below. The settings (except the password) are persisted to the filesystem and should load during subsequent runs.
