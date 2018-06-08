@@ -17,3 +17,6 @@ Interacting with the Epicor REST API using C# requires strongly-typed classes th
 3. After logging in, click "Get Service List" to get the list of available services from the API.
 4. Select one (or multiple) services, then click "Generate Models".
 5. Browse to the "ERP Project" target directory path to confirm that the classes generated correctly.
+
+## Credits
+Thanks to [Edward Welsh](https://github.com/EdWelsh) for creating this generator.
