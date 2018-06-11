@@ -131,11 +131,18 @@ namespace EpicorSwaggerRESTGenerator.Models
                             .Replace("public long?", "public string")
                         ;
 
+                        // String URL parameters must preserve single quotes, while other URL paramater data types must not include single quotes
                         code = Regex.Replace(code,
                             "(urlBuilder_\\.Replace\\(\"{(?:.*?)}\", System\\.Uri\\.EscapeDataString\\(System.Convert.ToString\\()((?:.*?))(, System\\.Globalization\\.CultureInfo\\.InvariantCulture\\)\\)\\);)", 
                             delegate (Match match)
                         {
-                            return match.Groups[1].Value + "\"'\" + " + match.Groups[2].Value + " + \"'\"" + match.Groups[3].Value;
+                            var matchedVariable = match.Groups[2].Value;
+                            if (matchedVariable == "company"
+                            || matchedVariable == "salesRepCode")
+                            {
+                                return match.Groups[1].Value + "\"'\" + " + matchedVariable + " + \"'\"" + match.Groups[3].Value;
+                            }
+                            else return match.ToString();
                         });
 
                         File.WriteAllText(Path.GetDirectoryName(details.Project) + "\\" + service.href + ".cs", code);
