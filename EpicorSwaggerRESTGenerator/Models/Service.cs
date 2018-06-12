@@ -127,6 +127,7 @@ namespace EpicorSwaggerRESTGenerator.Models
                             .Replace(@"public string BaseUrl", "public string ServiceUrl")
                             .Replace(@"get { return _baseUrl; }", "get { return base.BaseUrl + _serviceUrl; }")
                             .Replace(@"set { _baseUrl = value; }", "set { _serviceUrl = value; }")
+                            .Replace(@"urlBuilder_.Append(BaseUrl)", "urlBuilder_.Append(ServiceUrl)")
                             // Convert doubles and longs to strings (IEEE754Compatible)
                             .Replace("private double?", "private string")
                             .Replace("public double?", "public string")
