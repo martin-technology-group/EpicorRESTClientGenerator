@@ -123,7 +123,10 @@ namespace EpicorSwaggerRESTGenerator.Models
                             //I dont like the required attribute, changed to allow nulls
                             .Replace(", Required = Newtonsoft.Json.Required.Always)]", ", Required = Newtonsoft.Json.Required.AllowNull)]")
                             .Replace("[System.ComponentModel.DataAnnotations.Required]", "")
-                            .Replace(@"public string BaseUrl", "public new string BaseUrl")
+                            .Replace(@"public string BaseUrl", "public string ServiceUrl")
+                            .Replace(@"public string BaseUrl", "public string ServiceUrl")
+                            .Replace(@"get { return _baseUrl; }", "get { return base.BaseUrl + _serviceUrl; }")
+                            .Replace(@"set { _baseUrl = value; }", "set { _serviceUrl = value; }")
                             // Convert doubles and longs to strings (IEEE754Compatible)
                             .Replace("private double?", "private string")
                             .Replace("public double?", "public string")
@@ -144,6 +147,14 @@ namespace EpicorSwaggerRESTGenerator.Models
                             }
                             else return match.ToString();
                         });
+
+                        // 
+                        code = Regex.Replace(code,
+                            "(private string _baseUrl = \")(.*?)(\";)",
+                            delegate (Match match)
+                            {
+                                return "private string _serviceUrl = \"" + service.href.Replace("-", "") + match.Groups[3].Value;
+                            });
 
                         File.WriteAllText(Path.GetDirectoryName(details.Project) + "\\" + service.href + ".cs", code);
                     }
