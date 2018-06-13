@@ -143,6 +143,24 @@ namespace EpicorSwaggerRESTGenerator.WPFGUI
             services = service.getServices(textBox.Text, details);
             services.workspace.collection = services.workspace.collection.Where(o => o.href.ToUpper().StartsWith(type)).ToArray<serviceWorkspaceCollection>();
             listBox.ItemsSource = services.workspace.collection.Select(o => o.href);
+
+            try
+            {
+                var files = Directory.EnumerateFiles(System.IO.Path.GetDirectoryName(ERPProjectTextBox.Text), "*.cs");
+                foreach (var file in files)
+                {
+                    var filename = System.IO.Path.GetFileNameWithoutExtension(file);
+                    if (listBox.Items.Contains(filename))
+                    {
+                        listBox.SelectedItems.Add(listBox.Items[listBox.Items.IndexOf(filename)]);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                var error = ex;
+                // Something went wrong when trying to automatically select the existing services from the service list.
+            }
         }
         private bool isValid(TextBox textBox)
         {
