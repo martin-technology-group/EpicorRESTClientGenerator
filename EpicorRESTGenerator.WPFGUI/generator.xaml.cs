@@ -226,6 +226,7 @@ namespace EpicorSwaggerRESTGenerator.WPFGUI
             details.APIURL = url;
             details.Project = proj;
             details.Namespace = NamespaceTextBox.Text;
+            details.useNamespace = (bool)UseNamespaceCheckBox.IsChecked;
             details.useBaseClass = (bool)UseBaseClassCheckBox.IsChecked;
             details.Username = usernameTextBox.Text;
             details.Password = passwordTextBox.Password;
@@ -287,5 +288,7 @@ namespace EpicorSwaggerRESTGenerator.WPFGUI
         {
             EpicorRESTGenerator.WPFGUI.Properties.Settings.Default.Save();
         }
+
+      
     }
 }

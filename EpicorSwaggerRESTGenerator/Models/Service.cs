@@ -95,6 +95,7 @@ namespace EpicorSwaggerRESTGenerator.Models
                         };
                         var generator = new SwaggerToCSharpClientGenerator(document, settings);
                         if (details.useBaseClass) generator.Settings.ClientBaseClass = details.BaseClass;
+                        generator.Settings.CSharpGeneratorSettings.Namespace = (details.useNamespace)? "MyNamespace":details.Namespace ;
                         generator.Settings.UseHttpClientCreationMethod = true;
                         generator.Settings.AdditionalNamespaceUsages = new[] { "Newtonsoft.Json", "Newtonsoft.Json.Linq" };
                         generator.Settings.DisposeHttpClient = false;

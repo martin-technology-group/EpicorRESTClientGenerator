@@ -9,7 +9,7 @@
         Height="800" 
         Width="600"
         Closing="Window_Closing">
-    
+
     <Window.Resources>
         <Style TargetType="Label">
             <Setter Property="Padding" Value="5,0,5,0" />
@@ -31,7 +31,7 @@
             <Setter Property="Background" Value="#2871C5" />
         </Style>
     </Window.Resources>
-    
+
     <Grid Margin="0,0,2,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="25" />
@@ -46,29 +46,34 @@
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        
+
         <Label Content="Epicor URL:"
                HorizontalAlignment="Right"/>
-        
+
         <TextBox x:Name="serviceURLTextBox"
                  Text="{Binding Source={StaticResource Settings}, Path=Default.EpicorUrl}"
                  Grid.Column="1"
                  Grid.ColumnSpan="2"/>
-        
+
         <Label Content="Namespace:"
                HorizontalAlignment="Right"
                Grid.Row="1"/>
-        
+
         <TextBox x:Name="NamespaceTextBox"
                  TextWrapping="NoWrap" 
                  Text="{Binding Source={StaticResource Settings}, Path=Default.Namespace}" 
                  Grid.Row="1"
                  Grid.Column="1" />
-        
+        <CheckBox x:Name="UseNamespaceCheckBox" 
+                  Content="Use FQN Namespace"  
+                  VerticalAlignment="Center" 
+                  Grid.Row="1" 
+                  Grid.Column="2"
+                  IsChecked="True" />
         <Label Content="Base Class:" 
                HorizontalAlignment="Right" 
                Grid.Row="2" />
-        
+
         <TextBox x:Name="BaseClassTextBox"
                  TextWrapping="NoWrap" 
                  Text="{Binding Source={StaticResource Settings}, Path=Default.BaseClass}" 
@@ -121,7 +126,7 @@
                     Grid.ColumnSpan="3"
                     IsEnabled="False" 
                     SelectionChanged="OnTabItemChanged">
-            
+
             <TabItem Header="ERP">
                 <Grid Background="#FFE5E5E5">
                     <Grid.RowDefinitions>
@@ -136,46 +141,46 @@
                         <ColumnDefinition Width="2*" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    
+
                     <Label Content="Services URL:" 
                            HorizontalAlignment="Right" />
-                    
+
                     <TextBox x:Name="ERPAPIURLServiceTextBox" 
                              TextWrapping="NoWrap" 
                              Grid.Column="1"/>
-                    
+
                     <Button x:Name="GetERPServicesButton" 
                             Content="2. Get Service List" 
                             Grid.Column="2" 
                             Click="GetERPServicesButton_Click" />
-                    
+
                     <ListBox x:Name="ERPServiceListBox" 
                              SelectionMode="Extended" 
                              Grid.Row="1" 
                              Grid.ColumnSpan="3" 
                              SelectionChanged="ServiceListBox_SelectionChanged"/>
-                    
+
                     <Label Content="ERP Project:" 
                            Grid.Row="2" 
                            HorizontalAlignment="Right" />
-                    
+
                     <TextBox x:Name="ERPProjectTextBox" 
                              TextWrapping="NoWrap" 
                              Text="{Binding Source={StaticResource Settings}, Path=Default.ERPProject}" 
                              Grid.Row="2" 
                              Grid.Column="1" 
                              Grid.ColumnSpan="2"/>
-                    
+
                     <Label Content="API URL:" 
                            Grid.Row="3" 
                            HorizontalAlignment="Right" />
-                    
+
                     <TextBox x:Name="ERPAPIURLTextBox" 
                              TextWrapping="NoWrap" 
                              Grid.Row="3" 
                              Grid.Column="1" 
                              Grid.ColumnSpan="2"/>
-                    
+
                     <Button x:Name="GeneratERPButton" 
                             Content="3. Generate Models" 
                             Grid.Row="4" 
@@ -197,46 +202,46 @@
                         <ColumnDefinition Width="2*" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    
+
                     <Label Content="Services URL:" 
                            HorizontalAlignment="Right" />
-                    
+
                     <TextBox x:Name="ICEAPIURLServiceTextBox"
                              TextWrapping="NoWrap"
                              Grid.Column="1"/>
-                    
+
                     <Button x:Name="GetICEServicesButton" 
                             Content="Get ICE Services"
                             Grid.Column="2"
                             Click="GetICEServicesButton_Click" />
-                    
+
                     <ListBox x:Name="ICEServiceListBox"
                              SelectionMode="Extended" 
                              Grid.Row="1"
                              Grid.ColumnSpan="3"
                              SelectionChanged="ServiceListBox_SelectionChanged"/>
-                    
+
                     <Label Content="ICE Project:"
                            HorizontalAlignment="Right" 
                            Grid.Row="2"/>
-                    
+
                     <TextBox x:Name="ICEProjectTextBox"
                              TextWrapping="NoWrap" 
                              Text="F:\TMI.E10RestClient\E10RestClient.ICE\E10RestClient.ICE.csproj" 
                              Grid.Row="2"
                              Grid.Column="1" 
                              Grid.ColumnSpan="2"/>
-                    
+
                     <Label Content="API's URL:" 
                            HorizontalAlignment="Right"
                            Grid.Row="3"/>
-                    
+
                     <TextBox x:Name="ICEAPIURLTextBox"
                              TextWrapping="NoWrap"
                              Grid.Row="3"
                              Grid.Column="1" 
                              Grid.ColumnSpan="2"/>
-                    
+
                     <Button x:Name="GeneratICEButton" 
                             Content="Generate ICE"
                             Grid.Row="4"
@@ -258,47 +263,47 @@
                         <ColumnDefinition Width="2*" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    
+
                     <Label Content="Services URL:" 
                            HorizontalAlignment="Right" />
-                    
+
                     <TextBox x:Name="BAQAPIURLServiceTextBox"
                              TextWrapping="NoWrap"
                              Grid.Column="1"
                              Grid.ColumnSpan="2" />
-                    
+
                     <Button x:Name="GetBAQServicesButton" 
                             Content="Get BAQ Services"
                             Grid.Column="2" 
                             Click="GetBAQServicesButton_Click" />
-                    
+
                     <ListBox x:Name="BAQServiceListBox"
                              SelectionMode="Extended" 
                              Grid.Row="1"
                              Grid.ColumnSpan="3" 
                              SelectionChanged="ServiceListBox_SelectionChanged"/>
-                    
+
                     <Label Content="BAQ Project:" 
                            HorizontalAlignment="Right" 
                            Grid.Row="2"/>
-                    
+
                     <TextBox x:Name="BAQProjectTextBox"
                              TextWrapping="NoWrap"
                              Text="F:\TMI.E10RestClient\E10RestClient.BAQ\E10RestClient.BAQ.csproj"
                              Grid.Row="2"
                              Grid.Column="1" 
                              Grid.ColumnSpan="2"/>
-                    
+
                     <Label Content="API's URL:"
                            HorizontalAlignment="Right"
                            Grid.Row="3" />
-                    
+
                     <TextBox x:Name="BAQAPIURLTextBox"
                              TextWrapping="NoWrap"
                              Grid.Row="3"
                              Grid.Column="1"
                              Grid.ColumnSpan="2"/>
-                    
+
                     <Button x:Name="GeneratBAQButton" 
                             Content="Generate BAQ"
                             Grid.Row="4"
@@ -314,7 +319,7 @@
                         <ColumnDefinition Width="43*"/>
                         <ColumnDefinition Width="428*"/>
                     </Grid.ColumnDefinitions>
-                    
+
                     <Button x:Name="button" 
                             Content="Save" 
                             Grid.Column="3" 
@@ -323,7 +328,7 @@
                             VerticalAlignment="Top"
                             Width="75"
                             Click="button_Click"/>
-                    
+
                     <Button x:Name="button1" 
                             Content="Load" Grid.Column="3"
                             HorizontalAlignment="Left"
@@ -331,7 +336,7 @@
                             VerticalAlignment="Top"
                             Width="75"
                             Click="button1_Click"/>
-                    
+
                     <RichTextBox x:Name="richTextBox" 
                                  Grid.ColumnSpan="3" 
                                  Margin="0.38,40,9,10"
@@ -340,7 +345,7 @@
                                  Grid.Column="1" 
                                  VerticalScrollBarVisibility="Visible" 
                                  HorizontalScrollBarVisibility="Visible">
-                        
+
                         <FlowDocument>
                             <Paragraph>
                                 <Run Text="RichTextBox"/>
@@ -350,5 +355,6 @@
                 </Grid>
             </TabItem>
         </TabControl>
+
     </Grid>
 </Window>
