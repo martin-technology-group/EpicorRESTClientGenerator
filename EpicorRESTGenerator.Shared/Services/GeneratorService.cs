@@ -8,13 +8,15 @@ using System.IO;
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace EpicorRESTGenerator.Shared.Services
 {
-    [System.Xml.Serialization.XmlType(AnonymousType = true, Namespace = "http://www.w3.org/2007/app")]
-    [System.Xml.Serialization.XmlRoot(Namespace = "http://www.w3.org/2007/app", IsNullable = false)]
+    [XmlType(AnonymousType = true, Namespace = "http://www.w3.org/2007/app")]
+    [XmlRoot("service", Namespace = "http://www.w3.org/2007/app", IsNullable = false)]
     public partial class GeneratorService
     {
+        [XmlElement("workspace")]
         public ServiceWorkspace Workspace { get; set; }
 
         public static async Task<bool> GenerateCode(GeneratorService services, GeneratorOptions options)

@@ -1,15 +1,17 @@
-﻿namespace EpicorRESTGenerator.Shared.Models
+﻿using System.Xml.Serialization;
+
+namespace EpicorRESTGenerator.Shared.Models
 {
-    [System.Xml.Serialization.XmlType(AnonymousType = true, Namespace = "http://www.w3.org/2007/app")]
+    [XmlType(AnonymousType = true, Namespace = "http://www.w3.org/2007/app")]
     public partial class ServiceWorkspaceCollection
     {
-        [System.Xml.Serialization.XmlAttribute()]
+        [XmlAttribute(AttributeName = "href")]
         public string Href { get; set; }
 
-        [System.Xml.Serialization.XmlText()]
+        [XmlText()]
         public string[] Text { get; set; }
 
-        [System.Xml.Serialization.XmlElement(Namespace = "http://www.w3.org/2005/Atom")]
+        [XmlElement("title", Namespace = "http://www.w3.org/2005/Atom")]
         public Title Title { get; set; }
     }
 }
