@@ -48,7 +48,7 @@ namespace EpicorRESTGenerator
                 }
             }
 
-            IsValidURL(serviceURLTextBox.Text + "/api/v1/");
+            IsServiceValid(serviceURLTextBox.Text + "/api/v1/");
 
             MessageBoxResult result = MessageBox.Show("Do you want to generate a client for oData? " +
                 "Selecting No will default to custom methods", "", MessageBoxButton.YesNo);
@@ -115,17 +115,17 @@ namespace EpicorRESTGenerator
 
         private void GenerateERPButton_Click(object sender, RoutedEventArgs e)
         {
-            if (!IsValid(ERPAPIURLServiceTextBox) || !IsValidURL(ERPAPIURLServiceTextBox.Text))
+            if (!IsValueSet(ERPAPIURLServiceTextBox) || !IsServiceValid(ERPAPIURLServiceTextBox.Text))
             {
                 MessageBox.Show("Please provide a services URL for the ERP Services", ""); return;
             }
 
-            if (!IsValid(ERPProjectTextBox) || !FileExists(ERPProjectTextBox))
+            if (!IsValueSet(ERPProjectTextBox) || !FileExists(ERPProjectTextBox))
             {
                 MessageBox.Show("Please provide the ERP project directory", ""); return;
             }
 
-            if (!IsValid(ERPAPIURLTextBox))
+            if (!IsValueSet(ERPAPIURLTextBox))
             {
                 MessageBox.Show("Please provide the ERP API URL", ""); return;
             }
@@ -144,17 +144,17 @@ namespace EpicorRESTGenerator
 
         private void GenerateBAQButton_Click(object sender, RoutedEventArgs e)
         {
-            if (!IsValid(BAQAPIURLServiceTextBox) || !IsValidURL(BAQAPIURLServiceTextBox.Text))
+            if (!IsValueSet(BAQAPIURLServiceTextBox) || !IsServiceValid(BAQAPIURLServiceTextBox.Text))
             {
                 MessageBox.Show("Please provide a services URL for the BAQ Services", ""); return;
             }
 
-            if (!IsValid(BAQProjectTextBox) || !FileExists(BAQProjectTextBox))
+            if (!IsValueSet(BAQProjectTextBox) || !FileExists(BAQProjectTextBox))
             {
                 MessageBox.Show("Please provide the BAQ project directory", ""); return;
             }
 
-            if (!IsValid(BAQAPIURLTextBox))
+            if (!IsValueSet(BAQAPIURLTextBox))
             {
                 MessageBox.Show("Please provide the BAQ API URL", ""); return;
             }
@@ -173,17 +173,17 @@ namespace EpicorRESTGenerator
 
         private void GenerateICEButton_Click(object sender, RoutedEventArgs e)
         {
-            if (!IsValid(ICEAPIURLServiceTextBox) || !IsValidURL(ICEAPIURLServiceTextBox.Text))
+            if (!IsValueSet(ICEAPIURLServiceTextBox) || !IsServiceValid(ICEAPIURLServiceTextBox.Text))
             {
                 MessageBox.Show("Please provide a services URL for the ICE Services", ""); return;
             }
 
-            if (!IsValid(ICEProjectTextBox) || !FileExists(ICEProjectTextBox))
+            if (!IsValueSet(ICEProjectTextBox) || !FileExists(ICEProjectTextBox))
             {
                 MessageBox.Show("Please provide the ICE project directory", ""); return;
             }
 
-            if (!IsValid(ICEAPIURLTextBox))
+            if (!IsValueSet(ICEAPIURLTextBox))
             {
                 MessageBox.Show("Please provide the ICE API URL", ""); return;
             }
@@ -200,12 +200,12 @@ namespace EpicorRESTGenerator
             IsEnabled = true;
         }
 
-        private bool IsValid(TextBox textBox)
+        private bool IsValueSet(TextBox textBox)
         {
-            return !String.IsNullOrWhiteSpace(textBox.Text);
+            return !string.IsNullOrWhiteSpace(textBox.Text);
         }
 
-        private bool IsValidURL(string url)
+        private bool IsServiceValid(string url)
         {
             GeneratorOptions details = new GeneratorOptions();
             if ((bool)UseCredentialsCheckBox.IsChecked)
@@ -317,7 +317,7 @@ namespace EpicorRESTGenerator
             {
                 MessageBox.Show("Services URL is Required");
             }
-            if (!IsValidURL(textBox.Text)) return;
+            if (!IsServiceValid(textBox.Text)) return;
 
             GeneratorOptions details = new GeneratorOptions();
             if ((bool)UseCredentialsCheckBox.IsChecked)
