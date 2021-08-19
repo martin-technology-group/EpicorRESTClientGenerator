@@ -61,8 +61,7 @@ namespace EpicorRESTGenerator.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\yourusername\\Documents\\GitHub\\Epicor.Models\\Epicor.Models\\Epicor.Models\\" +
-            "Epicor.Models.csproj")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string ERPProject {
             get {
                 return ((string)(this["ERPProject"]));

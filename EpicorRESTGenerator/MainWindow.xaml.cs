@@ -22,6 +22,13 @@ namespace EpicorRESTGenerator
         public MainWindow()
         {
             InitializeComponent();
+
+            if (string.IsNullOrWhiteSpace(Properties.Settings.Default.ERPProject))
+            {
+                var username = Environment.UserName;
+                Properties.Settings.Default.ERPProject =
+                    $@"C:\Users\{username}\Documents\GitHub\Epicor.Models\Epicor.Models\Epicor.Models\Epicor.Models.csproj";
+            }
         }
 
         private void CheckService_Click(object sender, RoutedEventArgs e)
