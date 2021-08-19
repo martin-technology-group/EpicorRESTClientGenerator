@@ -33,9 +33,9 @@ namespace EpicorRESTGenerator
                 return;
             }
 
-            if ((bool)useCredentialsCheckBox.IsChecked)
+            if ((bool)UseCredentialsCheckBox.IsChecked)
             {
-                if (string.IsNullOrWhiteSpace(usernameTextBox.Text))
+                if (string.IsNullOrWhiteSpace(UsernameTextBox.Text))
                 {
                     MessageBox.Show("Username is required");
                     return;
@@ -102,7 +102,7 @@ namespace EpicorRESTGenerator
             details.Namespace = NamespaceTextBox.Text;
             details.UseNamespace = (bool)UseNamespaceCheckBox.IsChecked;
             details.UseBaseClass = (bool)UseBaseClassCheckBox.IsChecked;
-            details.Username = usernameTextBox.Text;
+            details.Username = UsernameTextBox.Text;
             details.Password = passwordTextBox.Password;
 
             var test = await GeneratorService.GenerateCode(generatorService, details);
@@ -113,7 +113,7 @@ namespace EpicorRESTGenerator
             return true;
         }
 
-        private void GeneratERPButton_Click(object sender, RoutedEventArgs e)
+        private void GenerateERPButton_Click(object sender, RoutedEventArgs e)
         {
             if (!IsValid(ERPAPIURLServiceTextBox) || !IsValidURL(ERPAPIURLServiceTextBox.Text))
             {
@@ -142,7 +142,7 @@ namespace EpicorRESTGenerator
             IsEnabled = true;
         }
 
-        private void GeneratBAQButton_Click(object sender, RoutedEventArgs e)
+        private void GenerateBAQButton_Click(object sender, RoutedEventArgs e)
         {
             if (!IsValid(BAQAPIURLServiceTextBox) || !IsValidURL(BAQAPIURLServiceTextBox.Text))
             {
@@ -171,7 +171,7 @@ namespace EpicorRESTGenerator
             IsEnabled = true;
         }
 
-        private void GeneratICEButton_Click(object sender, RoutedEventArgs e)
+        private void GenerateICEButton_Click(object sender, RoutedEventArgs e)
         {
             if (!IsValid(ICEAPIURLServiceTextBox) || !IsValidURL(ICEAPIURLServiceTextBox.Text))
             {
@@ -208,9 +208,9 @@ namespace EpicorRESTGenerator
         private bool IsValidURL(string url)
         {
             GeneratorOptions details = new GeneratorOptions();
-            if ((bool)useCredentialsCheckBox.IsChecked)
+            if ((bool)UseCredentialsCheckBox.IsChecked)
             {
-                details.Username = usernameTextBox.Text;
+                details.Username = UsernameTextBox.Text;
                 details.Password = passwordTextBox.Password;
             }
             try
@@ -274,7 +274,7 @@ namespace EpicorRESTGenerator
 
             if (!string.IsNullOrWhiteSpace(Properties.Settings.Default.Username))
             {
-                usernameTextBox.Text = Properties.Settings.Default.Username;
+                UsernameTextBox.Text = Properties.Settings.Default.Username;
             }
 
             if (!string.IsNullOrWhiteSpace(Properties.Settings.Default.ERPProject))
@@ -282,7 +282,7 @@ namespace EpicorRESTGenerator
                 ERPProjectTextBox.Text = Properties.Settings.Default.ERPProject;
             }
 
-            useCredentialsCheckBox.IsChecked = Properties.Settings.Default.UseCredentials;
+            UseCredentialsCheckBox.IsChecked = Properties.Settings.Default.UseCredentials;
         }
 
         private void LoadButton_Click(object sender, RoutedEventArgs e)
@@ -320,9 +320,9 @@ namespace EpicorRESTGenerator
             if (!IsValidURL(textBox.Text)) return;
 
             GeneratorOptions details = new GeneratorOptions();
-            if ((bool)useCredentialsCheckBox.IsChecked)
+            if ((bool)UseCredentialsCheckBox.IsChecked)
             {
-                details.Username = usernameTextBox.Text;
+                details.Username = UsernameTextBox.Text;
                 details.Password = passwordTextBox.Password;
             }
 
@@ -370,9 +370,9 @@ namespace EpicorRESTGenerator
             Properties.Settings.Default.EpicorUrl = serviceURLTextBox.Text;
             Properties.Settings.Default.Namespace = NamespaceTextBox.Text;
             Properties.Settings.Default.BaseClass = BaseClassTextBox.Text;
-            Properties.Settings.Default.Username = usernameTextBox.Text;
+            Properties.Settings.Default.Username = UsernameTextBox.Text;
             Properties.Settings.Default.ERPProject = ERPProjectTextBox.Text;
-            Properties.Settings.Default.UseCredentials = useCredentialsCheckBox.IsChecked == true;
+            Properties.Settings.Default.UseCredentials = UseCredentialsCheckBox.IsChecked == true;
             Properties.Settings.Default.Save();
         }
 

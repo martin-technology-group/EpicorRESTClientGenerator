@@ -91,14 +91,14 @@
                HorizontalAlignment="Right" 
                Grid.Row="3"/>
 
-        <TextBox x:Name="usernameTextBox"
+        <TextBox x:Name="UsernameTextBox"
                  TextWrapping="NoWrap" 
                  Text="{Binding Source={StaticResource Settings}, Path=Default.Username}" 
                  IsEnabled="{Binding Source={StaticResource Settings}, Path=Default.UseCredentials}"
                  Grid.Row="3"
                  Grid.Column="1"/>
 
-        <CheckBox x:Name="useCredentialsCheckBox" 
+        <CheckBox x:Name="UseCredentialsCheckBox" 
                   Content="Use Credentials"
                   VerticalAlignment="Center" 
                   IsChecked="{Binding Source={StaticResource Settings}, Path=Default.UseCredentials}"
@@ -181,11 +181,11 @@
                              Grid.Column="1" 
                              Grid.ColumnSpan="2"/>
 
-                    <Button x:Name="GeneratERPButton" 
+                    <Button x:Name="GenerateERPButton" 
                             Content="3. Generate Models" 
                             Grid.Row="4" 
                             Grid.Column="2" 
-                            Click="GeneratERPButton_Click"/>
+                            Click="GenerateERPButton_Click"/>
                 </Grid>
             </TabItem>
             <TabItem Header="ICE">
@@ -242,11 +242,11 @@
                              Grid.Column="1" 
                              Grid.ColumnSpan="2"/>
 
-                    <Button x:Name="GeneratICEButton" 
+                    <Button x:Name="GenerateICEButton" 
                             Content="Generate ICE"
                             Grid.Row="4"
                             Grid.Column="2" 
-                            Click="GeneratICEButton_Click"/>
+                            Click="GenerateICEButton_Click"/>
                 </Grid>
             </TabItem>
             <TabItem Header="BAQ">
@@ -304,11 +304,11 @@
                              Grid.Column="1"
                              Grid.ColumnSpan="2"/>
 
-                    <Button x:Name="GeneratBAQButton" 
+                    <Button x:Name="GenerateBAQButton" 
                             Content="Generate BAQ"
                             Grid.Row="4"
                             Grid.Column="3" 
-                            Click="GeneratBAQButton_Click"/>
+                            Click="GenerateBAQButton_Click"/>
                 </Grid>
             </TabItem>
             <TabItem Header="ClientBase">
