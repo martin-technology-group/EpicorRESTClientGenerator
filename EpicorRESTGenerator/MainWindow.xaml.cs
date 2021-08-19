@@ -22,7 +22,6 @@ namespace EpicorRESTGenerator
         public MainWindow()
         {
             InitializeComponent();
-            LoadSettings();
         }
 
         private void CheckService_Click(object sender, RoutedEventArgs e)
@@ -253,36 +252,6 @@ namespace EpicorRESTGenerator
                 return false;
             }
             return true;
-        }
-
-        private void LoadSettings()
-        {
-            if (!string.IsNullOrWhiteSpace(Properties.Settings.Default.EpicorUrl))
-            {
-                serviceURLTextBox.Text = Properties.Settings.Default.EpicorUrl;
-            }
-
-            if (!string.IsNullOrWhiteSpace(Properties.Settings.Default.Namespace))
-            {
-                NamespaceTextBox.Text = Properties.Settings.Default.Namespace;
-            }
-
-            if (!string.IsNullOrWhiteSpace(Properties.Settings.Default.BaseClass))
-            {
-                BaseClassTextBox.Text = Properties.Settings.Default.BaseClass;
-            }
-
-            if (!string.IsNullOrWhiteSpace(Properties.Settings.Default.Username))
-            {
-                UsernameTextBox.Text = Properties.Settings.Default.Username;
-            }
-
-            if (!string.IsNullOrWhiteSpace(Properties.Settings.Default.ERPProject))
-            {
-                ERPProjectTextBox.Text = Properties.Settings.Default.ERPProject;
-            }
-
-            UseCredentialsCheckBox.IsChecked = Properties.Settings.Default.UseCredentials;
         }
 
         private void LoadButton_Click(object sender, RoutedEventArgs e)
