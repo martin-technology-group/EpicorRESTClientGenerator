@@ -22,7 +22,7 @@ namespace EpicorRESTGenerator
         public MainWindow()
         {
             InitializeComponent();
-
+            LoadSettings();
         }
 
         private void CheckService_Click(object sender, RoutedEventArgs e)
@@ -73,9 +73,19 @@ namespace EpicorRESTGenerator
             tabControl.IsEnabled = true;
         }
 
+        private bool FileExists(TextBox textBox)
+        {
+            return File.Exists(textBox.Text);
+        }
+
         private void GetBAQServicesButton_Click(object sender, RoutedEventArgs e)
         {
             PopulateService(BAQAPIURLServiceTextBox, BAQServiceListBox, "");
+        }
+
+        private void GetERPServicesButton_Click(object sender, RoutedEventArgs e)
+        {
+            PopulateService(ERPAPIURLServiceTextBox, ERPServiceListBox, "ERP");
         }
 
         private void GetICEServicesButton_Click(object sender, RoutedEventArgs e)
@@ -83,9 +93,24 @@ namespace EpicorRESTGenerator
             PopulateService(ICEAPIURLServiceTextBox, ICEServiceListBox, "ICE");
         }
 
-        private void GetERPServicesButton_Click(object sender, RoutedEventArgs e)
+        private async Task<bool> Generate(string url, string proj)
         {
-            PopulateService(ERPAPIURLServiceTextBox, ERPServiceListBox, "ERP");
+            GeneratorOptions details = new GeneratorOptions();
+            details.BaseClass = BaseClassTextBox.Text;
+            details.APIURL = url;
+            details.Project = proj;
+            details.Namespace = NamespaceTextBox.Text;
+            details.UseNamespace = (bool)UseNamespaceCheckBox.IsChecked;
+            details.UseBaseClass = (bool)UseBaseClassCheckBox.IsChecked;
+            details.Username = usernameTextBox.Text;
+            details.Password = passwordTextBox.Password;
+
+            var test = await GeneratorService.GenerateCode(generatorService, details);
+            if (test)
+                MessageBox.Show("Success");
+            else
+                MessageBox.Show("Somehing went wrong");
+            return true;
         }
 
         private void GeneratERPButton_Click(object sender, RoutedEventArgs e)
@@ -117,34 +142,6 @@ namespace EpicorRESTGenerator
             IsEnabled = true;
         }
 
-        private void GeneratICEButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (!IsValid(ICEAPIURLServiceTextBox) || !IsValidURL(ICEAPIURLServiceTextBox.Text))
-            {
-                MessageBox.Show("Please provide a services URL for the ICE Services", ""); return;
-            }
-
-            if (!IsValid(ICEProjectTextBox) || !FileExists(ICEProjectTextBox))
-            {
-                MessageBox.Show("Please provide the ICE project directory", ""); return;
-            }
-
-            if (!IsValid(ICEAPIURLTextBox))
-            {
-                MessageBox.Show("Please provide the ICE API URL", ""); return;
-            }
-
-            if (ICEServiceListBox.SelectedItems.Count == 0)
-            {
-                MessageBox.Show("Please select the service you wish to generate a client for!", ""); return;
-            }
-
-            IsEnabled = false;
-            generatorService.Workspace.Collection = generatorService.Workspace.Collection
-                .Where(o => ICEServiceListBox.SelectedItems.Contains(o.Href)).ToArray();
-            var r = Generate(ICEAPIURLTextBox.Text, ICEProjectTextBox.Text).Result;
-            IsEnabled = true;
-        }
         private void GeneratBAQButton_Click(object sender, RoutedEventArgs e)
         {
             if (!IsValid(BAQAPIURLServiceTextBox) || !IsValidURL(BAQAPIURLServiceTextBox.Text))
@@ -173,48 +170,41 @@ namespace EpicorRESTGenerator
             var r = Generate(BAQAPIURLTextBox.Text, BAQProjectTextBox.Text).Result;
             IsEnabled = true;
         }
-        private void PopulateService(TextBox textBox, ListBox listBox, string type)
+
+        private void GeneratICEButton_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(textBox.Text))
+            if (!IsValid(ICEAPIURLServiceTextBox) || !IsValidURL(ICEAPIURLServiceTextBox.Text))
             {
-                MessageBox.Show("Services URL is Required");
-            }
-            if (!IsValidURL(textBox.Text)) return;
-
-            GeneratorOptions details = new GeneratorOptions();
-            if ((bool)useCredentialsCheckBox.IsChecked)
-            {
-                details.Username = usernameTextBox.Text;
-                details.Password = passwordTextBox.Password;
+                MessageBox.Show("Please provide a services URL for the ICE Services", ""); return;
             }
 
-            generatorService = GeneratorService.GetEpicorServices(textBox.Text, details);
+            if (!IsValid(ICEProjectTextBox) || !FileExists(ICEProjectTextBox))
+            {
+                MessageBox.Show("Please provide the ICE project directory", ""); return;
+            }
+
+            if (!IsValid(ICEAPIURLTextBox))
+            {
+                MessageBox.Show("Please provide the ICE API URL", ""); return;
+            }
+
+            if (ICEServiceListBox.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("Please select the service you wish to generate a client for!", ""); return;
+            }
+
+            IsEnabled = false;
             generatorService.Workspace.Collection = generatorService.Workspace.Collection
-                .Where(o => o.Href.ToUpper().StartsWith(type)).ToArray<ServiceWorkspaceCollection>();
-            listBox.ItemsSource = generatorService.Workspace.Collection.Select(o => o.Href);
-
-            try
-            {
-                var files = Directory.EnumerateFiles(Path.GetDirectoryName(ERPProjectTextBox.Text), "*.cs");
-                foreach (var file in files)
-                {
-                    var filename = System.IO.Path.GetFileNameWithoutExtension(file);
-                    if (listBox.Items.Contains(filename))
-                    {
-                        listBox.SelectedItems.Add(listBox.Items[listBox.Items.IndexOf(filename)]);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                var error = ex;
-                // TODO Log this exception instead of throwing it away
-            }
+                .Where(o => ICEServiceListBox.SelectedItems.Contains(o.Href)).ToArray();
+            var r = Generate(ICEAPIURLTextBox.Text, ICEProjectTextBox.Text).Result;
+            IsEnabled = true;
         }
+
         private bool IsValid(TextBox textBox)
         {
             return !String.IsNullOrWhiteSpace(textBox.Text);
         }
+
         private bool IsValidURL(string url)
         {
             GeneratorOptions details = new GeneratorOptions();
@@ -264,40 +254,35 @@ namespace EpicorRESTGenerator
             }
             return true;
         }
-        private bool FileExists(TextBox textBox)
-        {
-            return File.Exists(textBox.Text);
-        }
-        private async Task<bool> Generate(string url, string proj)
-        {
-            GeneratorOptions details = new GeneratorOptions();
-            details.BaseClass = BaseClassTextBox.Text;
-            details.APIURL = url;
-            details.Project = proj;
-            details.Namespace = NamespaceTextBox.Text;
-            details.UseNamespace = (bool)UseNamespaceCheckBox.IsChecked;
-            details.UseBaseClass = (bool)UseBaseClassCheckBox.IsChecked;
-            details.Username = usernameTextBox.Text;
-            details.Password = passwordTextBox.Password;
 
-            var test = await GeneratorService.GenerateCode(generatorService, details);
-            if (test)
-                MessageBox.Show("Success");
-            else
-                MessageBox.Show("Somehing went wrong");
-            return true;
-        }
-        private void OnTabItemChanged(object sender, SelectionChangedEventArgs e)
+        private void LoadSettings ()
         {
-            generatorService = null;
-            ERPServiceListBox.ItemsSource = null;
-            ICEServiceListBox.ItemsSource = null;
-            BAQServiceListBox.ItemsSource = null;
-        }
+            if (!string.IsNullOrWhiteSpace(Properties.Settings.Default.EpicorUrl))
+            {
+                serviceURLTextBox.Text = Properties.Settings.Default.EpicorUrl;
+            }
 
-        private void ServiceListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            e.Handled = true;
+            if (!string.IsNullOrWhiteSpace(Properties.Settings.Default.Namespace))
+            {
+                NamespaceTextBox.Text = Properties.Settings.Default.Namespace;
+            }
+
+            if (!string.IsNullOrWhiteSpace(Properties.Settings.Default.BaseClass))
+            {
+                BaseClassTextBox.Text = Properties.Settings.Default.BaseClass;
+            }
+
+            if (!string.IsNullOrWhiteSpace(Properties.Settings.Default.Username))
+            {
+                usernameTextBox.Text = Properties.Settings.Default.Username;
+            }
+
+            if (!string.IsNullOrWhiteSpace(Properties.Settings.Default.ERPProject))
+            {
+                ERPProjectTextBox.Text = Properties.Settings.Default.ERPProject;
+            }
+
+            useCredentialsCheckBox.IsChecked = Properties.Settings.Default.UseCredentials;
         }
 
         private void LoadButton_Click(object sender, RoutedEventArgs e)
@@ -317,6 +302,54 @@ namespace EpicorRESTGenerator
                 richTextBox.Document = document;
             }
         }
+
+        private void OnTabItemChanged(object sender, SelectionChangedEventArgs e)
+        {
+            generatorService = null;
+            ERPServiceListBox.ItemsSource = null;
+            ICEServiceListBox.ItemsSource = null;
+            BAQServiceListBox.ItemsSource = null;
+        }
+
+        private void PopulateService(TextBox textBox, ListBox listBox, string type)
+        {
+            if (string.IsNullOrWhiteSpace(textBox.Text))
+            {
+                MessageBox.Show("Services URL is Required");
+            }
+            if (!IsValidURL(textBox.Text)) return;
+
+            GeneratorOptions details = new GeneratorOptions();
+            if ((bool)useCredentialsCheckBox.IsChecked)
+            {
+                details.Username = usernameTextBox.Text;
+                details.Password = passwordTextBox.Password;
+            }
+
+            generatorService = GeneratorService.GetEpicorServices(textBox.Text, details);
+            generatorService.Workspace.Collection = generatorService.Workspace.Collection
+                .Where(o => o.Href.ToUpper().StartsWith(type)).ToArray<ServiceWorkspaceCollection>();
+            listBox.ItemsSource = generatorService.Workspace.Collection.Select(o => o.Href);
+
+            try
+            {
+                var files = Directory.EnumerateFiles(Path.GetDirectoryName(ERPProjectTextBox.Text), "*.cs");
+                foreach (var file in files)
+                {
+                    var filename = System.IO.Path.GetFileNameWithoutExtension(file);
+                    if (listBox.Items.Contains(filename))
+                    {
+                        listBox.SelectedItems.Add(listBox.Items[listBox.Items.IndexOf(filename)]);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                var error = ex;
+                // TODO Log this exception instead of throwing it away
+            }
+        }
+
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             SaveFileDialog dialog = new SaveFileDialog();
@@ -329,13 +362,28 @@ namespace EpicorRESTGenerator
                 FileStream file = new FileStream(dialog.FileName, FileMode.Create);
                 t.Save(file, System.Windows.DataFormats.Text);
                 file.Close();
-                //File.WriteAllText(dialog.FileName, richTextBox.Document.);
             }
+        }
+
+        private void SaveSettings()
+        {
+            Properties.Settings.Default.EpicorUrl = serviceURLTextBox.Text;
+            Properties.Settings.Default.Namespace = NamespaceTextBox.Text;
+            Properties.Settings.Default.BaseClass = BaseClassTextBox.Text;
+            Properties.Settings.Default.Username = usernameTextBox.Text;
+            Properties.Settings.Default.ERPProject = ERPProjectTextBox.Text;
+            Properties.Settings.Default.UseCredentials = useCredentialsCheckBox.IsChecked == true;
+            Properties.Settings.Default.Save();
+        }
+
+        private void ServiceListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            e.Handled = true;
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            EpicorRESTGenerator.Properties.Settings.Default.Save();
+            SaveSettings();
         }
     }
 }
