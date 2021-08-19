@@ -255,7 +255,7 @@ namespace EpicorRESTGenerator
             return true;
         }
 
-        private void LoadSettings ()
+        private void LoadSettings()
         {
             if (!string.IsNullOrWhiteSpace(Properties.Settings.Default.EpicorUrl))
             {
