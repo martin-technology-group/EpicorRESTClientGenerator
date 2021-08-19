@@ -1,4 +1,4 @@
-﻿<Window x:Class="EpicorSwaggerRESTGenerator.WPFGUI.generator"
+﻿<Window x:Class="EpicorSwaggerRESTGenerator.WPFGUI.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -320,22 +320,22 @@
                         <ColumnDefinition Width="428*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Button x:Name="button" 
+                    <Button x:Name="SaveButton" 
                             Content="Save" 
                             Grid.Column="3" 
                             HorizontalAlignment="Left"
                             Margin="369.543,10,0,0" 
                             VerticalAlignment="Top"
                             Width="75"
-                            Click="button_Click"/>
+                            Click="SaveButton_Click"/>
 
-                    <Button x:Name="button1" 
+                    <Button x:Name="LoadButton" 
                             Content="Load" Grid.Column="3"
                             HorizontalAlignment="Left"
                             Margin="289.543,10,0,0" 
                             VerticalAlignment="Top"
                             Width="75"
-                            Click="button1_Click"/>
+                            Click="LoadButton_Click"/>
 
                     <RichTextBox x:Name="richTextBox" 
                                  Grid.ColumnSpan="3" 

@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:properties="clr-namespace:EpicorRESTGenerator.WPFGUI.Properties"
              xmlns:local="clr-namespace:EpicorSwaggerRESTGenerator.WPFGUI"
-             StartupUri="generator.xaml">
+             StartupUri="MainWindow.xaml">
     <Application.Resources>
         <properties:Settings x:Key="Settings" />
     </Application.Resources>

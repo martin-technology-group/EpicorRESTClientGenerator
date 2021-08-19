@@ -1,58 +1,58 @@
 ﻿using EpicorSwaggerRESTGenerator.Models;
+using EpicorSwaggerRESTGenerator.Services;
 using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace EpicorSwaggerRESTGenerator.WPFGUI
 {
     /// <summary>
     /// Interaction logic for generator.xaml
     /// </summary>
-    public partial class generator : Window
+    public partial class MainWindow : Window
     {
-        service services;
-        public generator()
+        private GeneratorService generatorService;
+
+        public MainWindow()
         {
             InitializeComponent();
 
         }
+
         private void CheckService_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrEmpty(serviceURLTextBox.Text))
+            if (string.IsNullOrWhiteSpace(serviceURLTextBox.Text))
             {
                 MessageBox.Show("Epicor API URL is Required");
                 return;
             }
-            if((bool)useCredentialsCheckBox.IsChecked)
+
+            if ((bool)useCredentialsCheckBox.IsChecked)
             {
-                if(string.IsNullOrEmpty(usernameTextBox.Text))
+                if (string.IsNullOrWhiteSpace(usernameTextBox.Text))
                 {
                     MessageBox.Show("Username is required");
                     return;
                 }
-                if(string.IsNullOrEmpty(passwordTextBox.Password))
+
+                if (string.IsNullOrWhiteSpace(passwordTextBox.Password))
                 {
                     MessageBox.Show("Password is required");
                     return;
-                }  
+                }
             }
 
-            isvalidURL(serviceURLTextBox.Text + "/api/v1/");
+            IsValidURL(serviceURLTextBox.Text + "/api/v1/");
 
-            MessageBoxResult result = MessageBox.Show("Do you want to generate a client for oData? Selecting No will default to custom methods", "", MessageBoxButton.YesNo);
+            MessageBoxResult result = MessageBox.Show("Do you want to generate a client for oData? " +
+                "Selecting No will default to custom methods", "", MessageBoxButton.YesNo);
+
             switch (result)
             {
                 case MessageBoxResult.Yes:
@@ -64,89 +64,138 @@ namespace EpicorSwaggerRESTGenerator.WPFGUI
                     ICEAPIURLTextBox.Text = serviceURLTextBox.Text + "/api/swagger/v1/methods/";
                     break;
             }
-            BAQAPIURLTextBox.Text = serviceURLTextBox.Text + "/api/swagger/v1/baq/";
 
+            BAQAPIURLTextBox.Text = serviceURLTextBox.Text + "/api/swagger/v1/baq/";
             ERPAPIURLServiceTextBox.Text = serviceURLTextBox.Text + "/api/v1/";
             ICEAPIURLServiceTextBox.Text = serviceURLTextBox.Text + "/api/v1/";
             BAQAPIURLServiceTextBox.Text = serviceURLTextBox.Text + "/api/v1/BaqSvc/";
 
-
-
             tabControl.IsEnabled = true;
         }
-
 
         private void GetBAQServicesButton_Click(object sender, RoutedEventArgs e)
         {
             PopulateService(BAQAPIURLServiceTextBox, BAQServiceListBox, "");
         }
+
         private void GetICEServicesButton_Click(object sender, RoutedEventArgs e)
         {
             PopulateService(ICEAPIURLServiceTextBox, ICEServiceListBox, "ICE");
         }
+
         private void GetERPServicesButton_Click(object sender, RoutedEventArgs e)
         {
             PopulateService(ERPAPIURLServiceTextBox, ERPServiceListBox, "ERP");
         }
 
-
         private void GeneratERPButton_Click(object sender, RoutedEventArgs e)
         {
-            if (!isValid(ERPAPIURLServiceTextBox) || !isvalidURL(ERPAPIURLServiceTextBox.Text)) { MessageBox.Show("Please provide a services URL for the ERP Services", ""); return; }
-            if (!isValid(ERPProjectTextBox) || !fileExists(ERPProjectTextBox)) { MessageBox.Show("Please provide the ERP project directory", ""); return; }
-            if (!isValid(ERPAPIURLTextBox)) { MessageBox.Show("Please provide the ERP API URL", ""); return; }
-            if (ERPServiceListBox.SelectedItems.Count == 0) { MessageBox.Show("Please select the service you wish to generate a client for!", ""); return; }
+            if (!IsValid(ERPAPIURLServiceTextBox) || !IsValidURL(ERPAPIURLServiceTextBox.Text))
+            {
+                MessageBox.Show("Please provide a services URL for the ERP Services", ""); return;
+            }
+
+            if (!IsValid(ERPProjectTextBox) || !FileExists(ERPProjectTextBox))
+            {
+                MessageBox.Show("Please provide the ERP project directory", ""); return;
+            }
+
+            if (!IsValid(ERPAPIURLTextBox))
+            {
+                MessageBox.Show("Please provide the ERP API URL", ""); return;
+            }
+
+            if (ERPServiceListBox.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("Please select the service you wish to generate a client for!", ""); return;
+            }
+
             IsEnabled = false;
-            services.workspace.collection = services.workspace.collection.Where(o => ERPServiceListBox.SelectedItems.Contains(o.href)).ToArray();
-            var r = generate(ERPAPIURLTextBox.Text, ERPProjectTextBox.Text).Result;
+            generatorService.Workspace.Collection = generatorService.Workspace.Collection
+                .Where(o => ERPServiceListBox.SelectedItems.Contains(o.Href)).ToArray();
+            var r = Generate(ERPAPIURLTextBox.Text, ERPProjectTextBox.Text).Result;
             IsEnabled = true;
         }
+
         private void GeneratICEButton_Click(object sender, RoutedEventArgs e)
         {
-            if (!isValid(ICEAPIURLServiceTextBox) || !isvalidURL(ICEAPIURLServiceTextBox.Text)) { MessageBox.Show("Please provide a services URL for the ICE Services", ""); return; }
-            if (!isValid(ICEProjectTextBox) || !fileExists(ICEProjectTextBox)) { MessageBox.Show("Please provide the ICE project directory", ""); return; }
-            if (!isValid(ICEAPIURLTextBox)) { MessageBox.Show("Please provide the ICE API URL", ""); return; }
-            if (ICEServiceListBox.SelectedItems.Count == 0) { MessageBox.Show("Please select the service you wish to generate a client for!", ""); return; }
+            if (!IsValid(ICEAPIURLServiceTextBox) || !IsValidURL(ICEAPIURLServiceTextBox.Text))
+            {
+                MessageBox.Show("Please provide a services URL for the ICE Services", ""); return;
+            }
+
+            if (!IsValid(ICEProjectTextBox) || !FileExists(ICEProjectTextBox))
+            {
+                MessageBox.Show("Please provide the ICE project directory", ""); return;
+            }
+
+            if (!IsValid(ICEAPIURLTextBox))
+            {
+                MessageBox.Show("Please provide the ICE API URL", ""); return;
+            }
+
+            if (ICEServiceListBox.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("Please select the service you wish to generate a client for!", ""); return;
+            }
+
             IsEnabled = false;
-            services.workspace.collection = services.workspace.collection.Where(o => ICEServiceListBox.SelectedItems.Contains(o.href)).ToArray();
-            var r = generate(ICEAPIURLTextBox.Text, ICEProjectTextBox.Text).Result;
+            generatorService.Workspace.Collection = generatorService.Workspace.Collection
+                .Where(o => ICEServiceListBox.SelectedItems.Contains(o.Href)).ToArray();
+            var r = Generate(ICEAPIURLTextBox.Text, ICEProjectTextBox.Text).Result;
             IsEnabled = true;
         }
         private void GeneratBAQButton_Click(object sender, RoutedEventArgs e)
         {
-            if (!isValid(BAQAPIURLServiceTextBox) || !isvalidURL(BAQAPIURLServiceTextBox.Text)) { MessageBox.Show("Please provide a services URL for the BAQ Services", ""); return; }
-            if (!isValid(BAQProjectTextBox) || !fileExists(BAQProjectTextBox)) { MessageBox.Show("Please provide the BAQ project directory", ""); return; }
-            if (!isValid(BAQAPIURLTextBox)) { MessageBox.Show("Please provide the BAQ API URL", ""); return; }
-            if (BAQServiceListBox.SelectedItems.Count == 0) { MessageBox.Show("Please select the service you wish to generate a client for!", ""); return; }
+            if (!IsValid(BAQAPIURLServiceTextBox) || !IsValidURL(BAQAPIURLServiceTextBox.Text))
+            {
+                MessageBox.Show("Please provide a services URL for the BAQ Services", ""); return;
+            }
+
+            if (!IsValid(BAQProjectTextBox) || !FileExists(BAQProjectTextBox))
+            {
+                MessageBox.Show("Please provide the BAQ project directory", ""); return;
+            }
+
+            if (!IsValid(BAQAPIURLTextBox))
+            {
+                MessageBox.Show("Please provide the BAQ API URL", ""); return;
+            }
+
+            if (BAQServiceListBox.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("Please select the service you wish to generate a client for!", ""); return;
+            }
+
             IsEnabled = false;
-            services.workspace.collection = services.workspace.collection.Where(o => BAQServiceListBox.SelectedItems.Contains(o.href)).ToArray();
-            var r = generate(BAQAPIURLTextBox.Text, BAQProjectTextBox.Text).Result;
+            generatorService.Workspace.Collection = generatorService.Workspace.Collection
+                .Where(o => BAQServiceListBox.SelectedItems.Contains(o.Href)).ToArray();
+            var r = Generate(BAQAPIURLTextBox.Text, BAQProjectTextBox.Text).Result;
             IsEnabled = true;
         }
-
-
         private void PopulateService(TextBox textBox, ListBox listBox, string type)
         {
-            if (string.IsNullOrEmpty(textBox.Text))
+            if (string.IsNullOrWhiteSpace(textBox.Text))
             {
                 MessageBox.Show("Services URL is Required");
             }
-            if (!isvalidURL(textBox.Text)) return;
+            if (!IsValidURL(textBox.Text)) return;
 
-           EpicorDetails details = new EpicorDetails();
-            if((bool)useCredentialsCheckBox.IsChecked)
+            GeneratorOptions details = new GeneratorOptions();
+            if ((bool)useCredentialsCheckBox.IsChecked)
             {
                 details.Username = usernameTextBox.Text;
                 details.Password = passwordTextBox.Password;
             }
 
-            services = service.getServices(textBox.Text, details);
-            services.workspace.collection = services.workspace.collection.Where(o => o.href.ToUpper().StartsWith(type)).ToArray<serviceWorkspaceCollection>();
-            listBox.ItemsSource = services.workspace.collection.Select(o => o.href);
+            generatorService = GeneratorService.GetEpicorServices(textBox.Text, details);
+            generatorService.Workspace.Collection = generatorService.Workspace.Collection
+                .Where(o => o.Href.ToUpper().StartsWith(type)).ToArray<ServiceWorkspaceCollection>();
+            listBox.ItemsSource = generatorService.Workspace.Collection.Select(o => o.Href);
 
             try
             {
-                var files = Directory.EnumerateFiles(System.IO.Path.GetDirectoryName(ERPProjectTextBox.Text), "*.cs");
+                var files = Directory.EnumerateFiles(Path.GetDirectoryName(ERPProjectTextBox.Text), "*.cs");
                 foreach (var file in files)
                 {
                     var filename = System.IO.Path.GetFileNameWithoutExtension(file);
@@ -159,16 +208,16 @@ namespace EpicorSwaggerRESTGenerator.WPFGUI
             catch (Exception ex)
             {
                 var error = ex;
-                // Something went wrong when trying to automatically select the existing services from the service list.
+                // TODO Log this exception instead of throwing it away
             }
         }
-        private bool isValid(TextBox textBox)
+        private bool IsValid(TextBox textBox)
         {
-            return !String.IsNullOrEmpty(textBox.Text);
+            return !String.IsNullOrWhiteSpace(textBox.Text);
         }
-        private bool isvalidURL(string url)
+        private bool IsValidURL(string url)
         {
-            EpicorDetails details = new EpicorDetails();
+            GeneratorOptions details = new GeneratorOptions();
             if ((bool)useCredentialsCheckBox.IsChecked)
             {
                 details.Username = usernameTextBox.Text;
@@ -176,8 +225,8 @@ namespace EpicorSwaggerRESTGenerator.WPFGUI
             }
             try
             {
-                var valid = service.getServices(url, details);
-                if (valid.workspace != null && valid.workspace.collection != null && valid.workspace.collection.Count() == 0)
+                var valid = GeneratorService.GetEpicorServices(url, details);
+                if (valid.Workspace != null && valid.Workspace.Collection != null && valid.Workspace.Collection.Count() == 0)
                 {
                     MessageBox.Show("Service is invalid");
                     return false;
@@ -185,7 +234,7 @@ namespace EpicorSwaggerRESTGenerator.WPFGUI
             }
             catch (WebException ex)
             {
-                if(ex.Response != null)
+                if (ex.Response != null)
                 {
                     using (WebResponse response = ex.Response)
                     {
@@ -208,30 +257,30 @@ namespace EpicorSwaggerRESTGenerator.WPFGUI
                     return false;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
                 return false;
             }
             return true;
         }
-        private bool fileExists(TextBox textBox)
+        private bool FileExists(TextBox textBox)
         {
             return File.Exists(textBox.Text);
         }
-        private async Task<bool> generate(string url, string proj)
+        private async Task<bool> Generate(string url, string proj)
         {
-            EpicorDetails details = new EpicorDetails();
+            GeneratorOptions details = new GeneratorOptions();
             details.BaseClass = BaseClassTextBox.Text;
             details.APIURL = url;
             details.Project = proj;
             details.Namespace = NamespaceTextBox.Text;
-            details.useNamespace = (bool)UseNamespaceCheckBox.IsChecked;
-            details.useBaseClass = (bool)UseBaseClassCheckBox.IsChecked;
+            details.UseNamespace = (bool)UseNamespaceCheckBox.IsChecked;
+            details.UseBaseClass = (bool)UseBaseClassCheckBox.IsChecked;
             details.Username = usernameTextBox.Text;
             details.Password = passwordTextBox.Password;
 
-            var test = await service.generateCode(services, details);
+            var test = await GeneratorService.GenerateCode(generatorService, details);
             if (test)
                 MessageBox.Show("Success");
             else
@@ -240,7 +289,7 @@ namespace EpicorSwaggerRESTGenerator.WPFGUI
         }
         private void OnTabItemChanged(object sender, SelectionChangedEventArgs e)
         {
-            services = null;
+            generatorService = null;
             ERPServiceListBox.ItemsSource = null;
             ICEServiceListBox.ItemsSource = null;
             BAQServiceListBox.ItemsSource = null;
@@ -251,7 +300,7 @@ namespace EpicorSwaggerRESTGenerator.WPFGUI
             e.Handled = true;
         }
 
-        private void button1_Click(object sender, RoutedEventArgs e)
+        private void LoadButton_Click(object sender, RoutedEventArgs e)
         {
             richTextBox.Document = new FlowDocument();
 
@@ -268,7 +317,7 @@ namespace EpicorSwaggerRESTGenerator.WPFGUI
                 richTextBox.Document = document;
             }
         }
-        private void button_Click(object sender, RoutedEventArgs e)
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             SaveFileDialog dialog = new SaveFileDialog();
             dialog.DefaultExt = "*.cs";
@@ -288,7 +337,5 @@ namespace EpicorSwaggerRESTGenerator.WPFGUI
         {
             EpicorRESTGenerator.WPFGUI.Properties.Settings.Default.Save();
         }
-
-      
     }
 }

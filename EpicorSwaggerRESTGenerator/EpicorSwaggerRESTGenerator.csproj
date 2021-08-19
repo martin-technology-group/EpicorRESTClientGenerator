@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>EpicorSwaggerRESTGenerator</RootNamespace>
     <AssemblyName>EpicorSwaggerRESTGenerator</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -70,12 +71,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClientBase.cs" />
-    <Compile Include="Models\Client.cs" />
-    <Compile Include="Models\EpicorDetails.cs" />
-    <Compile Include="Models\Service.cs" />
-    <Compile Include="Models\serviceWorkspace.cs" />
-    <Compile Include="Models\serviceWorkspaceCollection.cs" />
-    <Compile Include="Models\title.cs" />
+    <Compile Include="Services\WebClientService.cs" />
+    <Compile Include="Models\GeneratorOptions.cs" />
+    <Compile Include="Services\GeneratorService.cs" />
+    <Compile Include="Models\ServiceWorkspace.cs" />
+    <Compile Include="Models\ServiceWorkspaceCollection.cs" />
+    <Compile Include="Models\Title.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
