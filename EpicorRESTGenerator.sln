@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31424.327
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EpicorRESTGenerator.WPFGUI", "EpicorRESTGenerator.WPFGUI\EpicorRESTGenerator.WPFGUI.csproj", "{72726F18-A0D8-4615-8AA4-C1B35CC9D6EA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EpicorRESTGenerator", "EpicorRESTGenerator\EpicorRESTGenerator.csproj", "{72726F18-A0D8-4615-8AA4-C1B35CC9D6EA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EpicorSwaggerRESTGenerator", "EpicorSwaggerRESTGenerator\EpicorSwaggerRESTGenerator.csproj", "{120492FF-9E4A-41C7-8CB0-555975DAC5F1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EpicorRESTGenerator.Shared", "EpicorRESTGenerator.Shared\EpicorRESTGenerator.Shared.csproj", "{120492FF-9E4A-41C7-8CB0-555975DAC5F1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,5 +24,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1FA9D12A-47FD-40D3-8529-9AC0037FC527}
 	EndGlobalSection
 EndGlobal

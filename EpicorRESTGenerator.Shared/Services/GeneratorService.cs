@@ -1,4 +1,4 @@
-﻿using EpicorSwaggerRESTGenerator.Models;
+﻿using EpicorRESTGenerator.Shared.Models;
 using Newtonsoft.Json;
 using NSwag;
 using NSwag.CodeGeneration.CSharp;
@@ -9,7 +9,7 @@ using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace EpicorSwaggerRESTGenerator.Services
+namespace EpicorRESTGenerator.Shared.Services
 {
     [System.Xml.Serialization.XmlType(AnonymousType = true, Namespace = "http://www.w3.org/2007/app")]
     [System.Xml.Serialization.XmlRoot(Namespace = "http://www.w3.org/2007/app", IsNullable = false)]

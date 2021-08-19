@@ -1,4 +1,4 @@
-﻿namespace EpicorSwaggerRESTGenerator.Models
+﻿namespace EpicorRESTGenerator.Shared.Models
 {
     [System.Xml.Serialization.XmlType(AnonymousType = true, Namespace = "http://www.w3.org/2007/app")]
     public partial class ServiceWorkspaceCollection

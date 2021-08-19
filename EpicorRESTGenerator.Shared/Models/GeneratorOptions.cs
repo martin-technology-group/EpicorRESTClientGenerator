@@ -1,4 +1,4 @@
-﻿namespace EpicorSwaggerRESTGenerator.Models
+﻿namespace EpicorRESTGenerator.Shared.Models
 {
     public class GeneratorOptions
     {

@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace EpicorSwaggerRESTGenerator.Services
+namespace EpicorRESTGenerator.Shared.Services
 {
     public static class WebClientService
     {

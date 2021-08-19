@@ -7,8 +7,8 @@
     <ProjectGuid>{120492FF-9E4A-41C7-8CB0-555975DAC5F1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>EpicorSwaggerRESTGenerator</RootNamespace>
-    <AssemblyName>EpicorSwaggerRESTGenerator</AssemblyName>
+    <RootNamespace>EpicorRESTGenerator.Shared</RootNamespace>
+    <AssemblyName>EpicorRESTGenerator.Shared</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

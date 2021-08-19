@@ -7,8 +7,8 @@
     <ProjectGuid>{72726F18-A0D8-4615-8AA4-C1B35CC9D6EA}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>EpicorRESTGenerator.WPFGUI</RootNamespace>
-    <AssemblyName>EpicorRESTGenerator.WPFGUI</AssemblyName>
+    <RootNamespace>EpicorRESTGenerator</RootNamespace>
+    <AssemblyName>EpicorRESTGenerator</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -101,9 +101,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EpicorSwaggerRESTGenerator\EpicorSwaggerRESTGenerator.csproj">
+    <ProjectReference Include="..\EpicorRESTGenerator.Shared\EpicorRESTGenerator.Shared.csproj">
       <Project>{120492FF-9E4A-41C7-8CB0-555975DAC5F1}</Project>
-      <Name>EpicorSwaggerRESTGenerator</Name>
+      <Name>EpicorRESTGenerator.Shared</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

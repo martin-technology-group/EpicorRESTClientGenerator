@@ -1,5 +1,5 @@
-﻿using EpicorSwaggerRESTGenerator.Models;
-using EpicorSwaggerRESTGenerator.Services;
+﻿using EpicorRESTGenerator.Shared.Models;
+using EpicorRESTGenerator.Shared.Services;
 using Microsoft.Win32;
 using System;
 using System.IO;
@@ -10,7 +10,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 
-namespace EpicorSwaggerRESTGenerator.WPFGUI
+namespace EpicorRESTGenerator
 {
     /// <summary>
     /// Interaction logic for generator.xaml
@@ -335,7 +335,7 @@ namespace EpicorSwaggerRESTGenerator.WPFGUI
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            EpicorRESTGenerator.WPFGUI.Properties.Settings.Default.Save();
+            EpicorRESTGenerator.Properties.Settings.Default.Save();
         }
     }
 }
