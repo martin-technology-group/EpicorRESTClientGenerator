@@ -1,25 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Net;
 
-namespace EpicorSwaggerRESTGenerator.Models
+namespace EpicorRESTGenerator.Shared.Services
 {
-    public static class Client
+    public static class WebClientService
     {
-        public static WebClient getWebClient(string username = "", string password = "")
+        public static WebClient GetWebClient(string username = null, string password = null)
         {
             WebClient client = new WebClient();
             ServicePointManager.ServerCertificateValidationCallback += (senderC, cert, chain, sslPolicyErrors) => true;
+
             if (!string.IsNullOrEmpty(username))
             {
                 client.Credentials = new NetworkCredential() { UserName = username, Password = password };
-            }else
+            }
+            else
             {
                 client.UseDefaultCredentials = true;
-            }         
+            }
+
             return client;
         }
     }
